@@ -1,3 +1,4 @@
+from os import path
 import datetime
 import hashlib
 from src import config
@@ -28,12 +29,18 @@ class Submission:
                      self.submit_timestamp]:
             box.update(bytes(data))
         return box.hexdigest()[:8]
+
     def get_file_name(self) -> str:
         return f"{hash(self)}[{self.contestant}][{self.problem_name}].[{self.lang}]"
+
+class ThemisInteractError(Exception):
+    '''Class for throwing Themis errors around'''
 
 class ThemisInstance:
     def __init__(self, osd: str, skip_duplicate: config.SKIP_DUPLICATE) -> None:
         '''The one and only object needed to interact with Themis.'''
+        if not path.exists(osd):
+            raise FileNotFoundError(f"{osd} cannot be used because it doesn't exists.")
         self.osd = osd
         self.skip_duplicate = skip_duplicate
         # TODO: Implement system to skip duplicate codes
@@ -45,3 +52,4 @@ class ThemisInstance:
         fileio.submit(self.osd, submission)
         if not await_result:
             return None
+        return await fileio.read_result(self.osd, submission)
