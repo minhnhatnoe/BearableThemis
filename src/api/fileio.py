@@ -13,7 +13,10 @@ def write_file(fpath: str, content: str) -> None:
     with open(fpath, 'xb') as submit_file:
         submit_file.write(sanitized_code)
 
+def get_file_name(sub: classes.Submission) -> str:
+    return f"{hash(sub)}[{sub.contestant}][{sub.problem_name}].[{sub.lang}]"
+
 def submit(osd: str, sub: classes.Submission) -> None:
     '''Submit a submission. Make internal call to write_file.'''
-    fname = f"{hash(sub)}[{sub.contestant}][{sub.problem_name}].[{sub.lang}]"
+    fname = get_file_name(sub)
     write_file(path.join(osd, fname), sub.content)
