@@ -28,6 +28,8 @@ class Submission:
                      self.submit_timestamp]:
             box.update(bytes(data))
         return box.hexdigest()[:8]
+    def get_file_name(self) -> str:
+        return f"{hash(self)}[{self.contestant}][{self.problem_name}].[{self.lang}]"
 
 class ThemisInstance:
     def __init__(self, osd: str, skip_duplicate: config.SKIP_DUPLICATE) -> None:
@@ -40,4 +42,6 @@ class ThemisInstance:
                      submission: Submission,
                      await_result: bool = config.ONLINE_MODE) -> None | str:
         '''Submits to Themis for judging. Returns the result if await_result is True'''
-        
+        fileio.submit(self.osd, submission)
+        if not await_result:
+            return None
