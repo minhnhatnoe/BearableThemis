@@ -1,4 +1,5 @@
 import datetime
+import hashlib
 from src import config
 from src.api import fileio
 
@@ -16,10 +17,17 @@ class Submission:
         self.source = source
         self.submit_timestamp, self.recieve_timestamp = submit_timestamp, recieve_timestamp
     
-    def __hash__(self) -> int:
-        return hash((self.contestant, self.problem_name, self.lang,
+    def __hash__(self) -> str:
+        '''Hashes a submission.
+        The same submission from a platform (ie. Same cell in Sheets)\
+        is guaranteed to have the same hash value across all runs.
+        Internally, this uses sha256, and returns the first 8 characters'''
+        box = hashlib.new("sha256")
+        for data in [self.contestant, self.problem_name, self.lang,
                      self.content, self.source,
-                     self.submit_timestamp))
+                     self.submit_timestamp]:
+            box.update(bytes(data))
+        return box.hexdigest()[:8]
 
 class ThemisInstance:
     def __init__(self, osd: str, skip_duplicate: config.SKIP_DUPLICATE) -> None:
