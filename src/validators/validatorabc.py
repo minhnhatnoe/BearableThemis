@@ -1,3 +1,4 @@
+from abc import ABC
 from src.api.submission import Submission
 
 
@@ -7,12 +8,12 @@ class CodeError(Exception):
     def __init__(self, console_msg: str, contestant_msg: str | None = None) -> None:
         '''Console_msg will be printed to console and log.\
            Contestant_msg will be sent to contestant, defaults to console_msg'''
-        super().__init__()
+        super().__init__(console_msg)
         self.console_msg = console_msg
         self.contestant_msg = console_msg if contestant_msg is None else contestant_msg
 
 
-class Validator:
+class Validator(ABC):
     '''Base class for all validators. All validators should be derived from this class'''
 
     def __call__(self, sub: Submission) -> None:

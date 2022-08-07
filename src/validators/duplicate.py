@@ -1,13 +1,13 @@
 import logging
-from src.validators import validbase
+from validators import validatorabc
 from src.api.submission import Submission
 
 
-class DuplicatedCodeError(validbase.CodeError):
+class DuplicatedCodeError(validatorabc.CodeError):
     '''Class for throwing when code is duplicated'''
 
 
-class Duplicate(validbase.Validator):
+class Duplicate(validatorabc.Validator):
     '''Check if code is duplicated'''
 
     def __init__(self) -> None:
