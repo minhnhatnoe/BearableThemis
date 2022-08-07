@@ -14,7 +14,7 @@ class ThemisInstance:
     '''The one and only object needed to interact with Themis.'''
 
     def __init__(self, osd: str, contestants: List[str],
-                 validators: validbase.Validator) -> None:
+                 validator: validbase.Validator) -> None:
         '''Initializes the instance with options.
         OSD: path set in Themis.
         Contestants: list of contestant.
@@ -25,7 +25,7 @@ class ThemisInstance:
                 f"{osd} cannot be used because it doesn't exists.")
         self.osd = osd
         self.contestants = {contestant for contestant in contestants}
-        self.validators = validators
+        self.validator = validator
         logging.info(f"Created Instance writing to {self.osd}")
 
     def is_contestant(self, name: str) -> bool:
@@ -34,18 +34,7 @@ class ThemisInstance:
 
     def validate_submission(self, sub: Submission) -> None:
         '''Checks if a submission is legitimate'''
-        if hash(sub.content) in self.contestants[sub.contestant]:
-            logging.warning(
-                f"{sub.contestant}'s code of {sub.problem_name} is duplicated.")
-            raise validbase.DuplicatedCodeError("Duplicated code.", contestant_msg="You submitted duplicated code")
-        for validator in self.validators:
-            try:
-                validator(sub)
-            except validbase.CodeError as error:
-                logging.warning(
-                    f"Validator {validator.__name__} denied \
-{sub.contestant}'s code of {sub.problem_name} due to {error.console_msg}")
-                raise error
+        self.validator(sub)
 
     async def submit(self,
                      sub: Submission,
