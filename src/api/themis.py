@@ -44,6 +44,7 @@ class ThemisInstance:
         assert(self.is_contestant(sub.contestant))
         self.validate_submission(sub)
         fileio.submit(self.osd, sub)
+        self.validator.add(sub)
         if not await_result:
             return None
         return await fileio.read_result(self.osd, sub)

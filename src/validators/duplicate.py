@@ -21,9 +21,11 @@ class Duplicate(validbase.Validator):
         if hash_val in self.code_hashes[sub.contestant]:
             logging.warning(
                 f"{sub.contestant}'s code of {sub.problem_name} is duplicated.")
-            raise validbase.DuplicatedCodeError("Duplicated code", "You submitted duplicated code")
+            raise DuplicatedCodeError("Duplicated code", "You submitted duplicated code")
 
 
     def add(self, sub: Submission) -> None:
         '''Hashes and add the submission'''
-        self.code_hashes[sub.contestant].append(hash(sub.content))
+        if sub.contestant not in self.code_hashes:
+            self.code_hashes[sub.contestant] = {}
+        self.code_hashes[sub.contestant][hash(sub.content)] = sub.submit_timestamp
