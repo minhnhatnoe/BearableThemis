@@ -1,6 +1,8 @@
 from os import path
+import logging
 import datetime
 import hashlib
+from typing import List
 from src import config
 from src.api import fileio
 
@@ -17,6 +19,7 @@ class Submission:
         self.content = content
         self.source = source
         self.submit_timestamp, self.recieve_timestamp = submit_timestamp, recieve_timestamp
+        logging.info(f"Recieved {problem_name}.{lang} of {contestant} from {source} at {recieve_timestamp}")
     
     def __hash__(self) -> str:
         '''Hashes a submission.
@@ -36,20 +39,39 @@ class Submission:
 class ThemisInteractError(Exception):
     '''Class for throwing Themis errors around'''
 
+class CodeError(Exception):
+    '''Class for throwing errors with codes submitted'''
+
+class BannedSyntax(CodeError):
+    '''Thrown if specified pattern appears in code'''
+
+class DuplicatedCodeError(CodeError):
+    '''Thrown if user submitted duplicate code'''
+
 class ThemisInstance:
-    def __init__(self, osd: str, skip_duplicate: config.SKIP_DUPLICATE) -> None:
+    def __init__(self, osd: str, contestants: List[str],
+                 skip_duplicate: config.SKIP_DUPLICATE) -> None:
         '''The one and only object needed to interact with Themis.'''
         if not path.exists(osd):
             raise FileNotFoundError(f"{osd} cannot be used because it doesn't exists.")
         self.osd = osd
         self.skip_duplicate = skip_duplicate
-        # TODO: Implement system to skip duplicate codes
+        self.contestants = {contestant: {} for contestant in contestants}
+        logging.info(f"Created Instance writing to {self.osd}")
+    
+    def is_contestant(self, name: str) -> bool:
+        return name in self.contestants
 
+    def submission_legit(self, submission: Submission) -> None:
+        if hash(submission.content) in self.contestants[submission.contestant]:
+            raise CodeError("Duplicated code")
+        
+    
     async def submit(self,
                      submission: Submission,
                      await_result: bool = config.ONLINE_MODE) -> None | str:
         '''Submits to Themis for judging. Returns the result if await_result is True'''
+
         fileio.submit(self.osd, submission)
-        if not await_result:
-            return None
+        if not await_result: return None
         return await fileio.read_result(self.osd, submission)
