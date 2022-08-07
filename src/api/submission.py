@@ -21,7 +21,7 @@ class Submission:
         logging.info(
             f"Recieved {problem_name}.{lang} of {contestant} from {source} at {recieve_timestamp}")
 
-    def __hash__(self) -> str:
+    def hash(self) -> str:
         '''Hashes a submission.
         The same submission from a platform (ie. Same cell in Sheets)\
         is guaranteed to have the same hash value across all runs.
@@ -30,8 +30,8 @@ class Submission:
         for data in [self.contestant, self.problem_name, self.lang,
                      self.content, self.source,
                      self.submit_timestamp]:
-            box.update(bytes(data))
+            box.update(bytes(f"{data}", 'utf-8'))
         return box.hexdigest()[:8]
 
     def get_file_name(self) -> str:
-        return f"{hash(self)}[{self.contestant}][{self.problem_name}].[{self.lang}]"
+        return f"{self.hash()}[{self.contestant}][{self.problem_name}].{self.lang}"

@@ -5,7 +5,7 @@ from typing import List
 from src import config
 from src.api import fileio
 from src.api.submission import Submission
-from validators import validbase
+from src.validators import validbase
 
 class ThemisInteractError(Exception):
     '''Class for throwing Themis errors around'''
@@ -42,7 +42,7 @@ class ThemisInstance:
         '''Submits to Themis for judging. Returns the result if await_result is True'''
 
         assert(self.is_contestant(sub.contestant))
-        self.validate_sub(sub)
+        self.validate_submission(sub)
         fileio.submit(self.osd, sub)
         if not await_result:
             return None
