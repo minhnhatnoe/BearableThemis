@@ -11,7 +11,7 @@ def write_file(fpath: str, content: str) -> None:
     '''Write a file to a folder. Throws if file already exists.'''
     if path.exists(fpath):
         raise FileIOException(f"Duplicated file. Name: {fpath}")
-    sanitized_code = content.encode("ascii", errors="ignore")
+    sanitized_code = content.encode('utf-8', errors="ignore")
     with open(fpath, 'xb') as submit_file:
         submit_file.write(sanitized_code)
 
