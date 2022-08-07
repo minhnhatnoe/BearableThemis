@@ -1,4 +1,4 @@
-from api import themis
+from src.api.submission import Submission
 
 
 class CodeError(Exception):
@@ -15,8 +15,8 @@ class CodeError(Exception):
 class Validator:
     '''Base class for all validators. All validators should be derived from this class'''
 
-    def __call__(self, sub: themis.Submission) -> None:
+    def __call__(self, sub: Submission) -> None:
         '''Checks a submission'''
 
-    def add(self, sub: themis.Submission) -> None:
+    def add(self, sub: Submission) -> None:
         '''Mark a submission as added'''

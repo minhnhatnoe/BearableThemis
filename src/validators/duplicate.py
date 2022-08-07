@@ -7,7 +7,7 @@ class DuplicatedCodeError(validbase.CodeError):
     '''Class for throwing when code is duplicated'''
 
 
-class Duplicate:
+class Duplicate(validbase.Validator):
     '''Check if code is duplicated'''
 
     def __init__(self) -> None:
