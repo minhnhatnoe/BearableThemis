@@ -1,9 +1,29 @@
 [MAIN]
-disable=too-few-public-methods,too-many-arguments
+
+# Use multiple processes to speed up Pylint.
+jobs=4
+
+[MESSAGES CONTROL]
+
+disable=too-few-public-methods,
+        too-many-arguments,
+
+[BASIC]
+
 good-names=main,_
+
+[FORMAT]
+
 max-line-length=120
+single-line-if-stmt=yes
 indent-string='    '
+
+[VARIABLES]
+
 init-import=no
+
+[SIMILARITIES]
+
 min-similarity-lines=4
 ignore-comments=yes
 ignore-docstrings=yes
