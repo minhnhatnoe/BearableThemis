@@ -1,3 +1,4 @@
+'''Contains the Submission class'''
 import logging
 import datetime
 import hashlib
@@ -6,8 +7,8 @@ import hashlib
 class Submission:
     '''Represents a submission'''
 
-    def __init__(self, contestant: str, problem_name: str, lang: str,
-                 content: str, source: str,
+    def __init__(self, contestant: str, problem_name: str, # pylint: disable=too-many-arguments
+                 lang: str, content: str, source: str,
                  submit_timestamp: datetime.datetime,
                  recieve_timestamp: datetime.datetime = datetime.datetime.now()) -> None:
         '''Creates a new submission.
@@ -19,11 +20,12 @@ class Submission:
         self.source = source
         self.submit_timestamp, self.recieve_timestamp = submit_timestamp, recieve_timestamp
         logging.info(
-            f"Recieved {problem_name}.{lang} of {contestant} from {source} at {recieve_timestamp}")
+                "Recieved %s.%s of %s from %s at %s",
+                problem_name, lang, contestant, source, recieve_timestamp)
 
     def hash(self) -> str:
         '''Hashes a submission.
-        The same submission from a platform (ie. Same cell in Sheets)\
+        The same submission from a platform (ie. Same cell in Sheets)
         is guaranteed to have the same hash value across all runs.
         Internally, this uses sha256, and returns the first 8 characters'''
         box = hashlib.new("sha256")
@@ -34,4 +36,5 @@ class Submission:
         return box.hexdigest()[:8]
 
     def get_file_name(self) -> str:
+        '''Generate file name when interacting with themis'''
         return f"{self.hash()}[{self.contestant}][{self.problem_name}].{self.lang}"
