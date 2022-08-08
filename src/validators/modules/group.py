@@ -1,12 +1,13 @@
 from typing import List
-import logging
-from validators import validatorabc
+from src.validators.modules.validatorabc import Validator
 from src.api.submission import Submission
 
-class Group(validatorabc.Validator):
+__all__ = ['Group']
+
+class Group(Validator):
     '''Bind multiple validators together'''
     name = "Group"
-    def __init__(self, validators: List[validatorabc.Validator] = []):
+    def __init__(self, validators: List[Validator] = []):
         '''Simply assigns the validators'''
         self.validators = validators
 

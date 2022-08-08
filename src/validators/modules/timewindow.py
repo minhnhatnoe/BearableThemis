@@ -1,9 +1,12 @@
 import datetime
-from src.validators import validatorabc
 from src.api.submission import Submission
-from validators import group
+from src.validators.modules.group import Group
+from src.validators.modules.validatorabc import Validator
+from src.validators.error import CodeError
 
-class StartTime(validatorabc.Validator):
+__all__ = ['StartTime', 'EndTime', 'TimeWindow']
+
+class StartTime(Validator):
     '''Drop submissions with submit_timestamp out of range [start, +inf)'''
     name = "Start-time"
     def __init__(self, start: datetime.datetime):
@@ -13,9 +16,9 @@ class StartTime(validatorabc.Validator):
     def __call__(self, sub: Submission) -> None:
         if sub.submit_timestamp < self.start:
             detail = f"Submission made at {sub.submit_timestamp}, which is before {self.start}"
-            raise validatorabc.CodeError(type(self), sub, detail)
+            raise CodeError(type(self), sub, detail)
 
-class EndTime(validatorabc.Validator):
+class EndTime(Validator):
     '''Drop submissions with submit_timestamp out of range (-inf, end)'''
     name = "End-time"
     def __init__(self, end: datetime.datetime):
@@ -25,9 +28,9 @@ class EndTime(validatorabc.Validator):
     def __call__(self, sub: Submission) -> None:
         if sub.submit_timestamp >= self.end:
             detail = f"Submission made at {sub.submit_timestamp}, which is after {self.end}"
-            raise validatorabc.CodeError(type(self), sub, detail)
+            raise CodeError(type(self), sub, detail)
 
-class TimeWindow(group.Group):
+class TimeWindow(Group):
     '''Drop submissions with submit_timestamp out of range [start, end)'''
     name = "Time-window"
     def __init__(self, start: datetime.datetime, end: datetime.datetime):

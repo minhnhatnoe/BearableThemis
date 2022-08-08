@@ -5,7 +5,7 @@ from typing import List
 from src import config
 from src.api import fileio
 from src.api.submission import Submission
-from validators import validatorabc
+from src.validators import Validator
 
 class ThemisInteractError(Exception):
     '''Class for throwing Themis errors around'''
@@ -14,7 +14,7 @@ class ThemisInstance:
     '''The one and only object needed to interact with Themis.'''
 
     def __init__(self, osd: str, contestants: List[str],
-                 validator: validatorabc.Validator,
+                 validator: Validator,
                  await_result: bool = config.ONLINE_MODE) -> None:
         '''Initializes the instance with options.
         OSD: path set in Themis.

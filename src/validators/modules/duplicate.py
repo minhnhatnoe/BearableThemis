@@ -1,8 +1,10 @@
-from validators import validatorabc
 from src.api.submission import Submission
+from src.validators.modules.validatorabc import Validator
+from src.validators.error import CodeError
 
+__all__ = ['Duplicate']
 
-class Duplicate(validatorabc.Validator):
+class Duplicate(Validator):
     '''Check if code is duplicated'''
     name = "Duplicate"
 
@@ -18,7 +20,7 @@ class Duplicate(validatorabc.Validator):
         hash_val = hash(sub.content)
         if hash_val in self.code_hashes[sub.contestant]:
             detail = f"Same code submitted at {self.code_hashes[sub.contestant][hash_val]}"
-            raise validatorabc.CodeError(type(self), sub, detail)
+            raise CodeError(type(self), sub, detail)
 
     def add(self, sub: Submission) -> None:
         '''Hashes and add the submission'''
