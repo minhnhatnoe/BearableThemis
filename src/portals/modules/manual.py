@@ -1,2 +1,1 @@
 '''Manual submission mode'''
-
