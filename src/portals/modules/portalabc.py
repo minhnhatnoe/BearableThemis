@@ -19,7 +19,7 @@ class PassivePortal(Portal, ABC):
 
     def __init__(self, on_recieve: Callable[[Submission], Coroutine[None]]):
         """Function on_recieve will be called whenever a new submission is detected"""
-        logging.info("{} portal has been initialized", type(self).name)
+        logging.info("%s portal has been initialized", type(self).name)
         super().__init__(on_recieve)
 
 
@@ -30,7 +30,7 @@ class ActivePortal(Portal, ABC):
                  period: float):
         """Period is number of seconds to wait between crawling attempts"""
         logging.info(
-            "{} portal has been initialized, crawling every {}s", type(self.name), period)
+            "%s portal has been initialized, crawling every %fs", type(self).name, period)
         super().__init__(on_recieve)
         self.period = period
 
