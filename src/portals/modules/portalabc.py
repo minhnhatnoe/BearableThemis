@@ -34,9 +34,9 @@ class ActivePortal(Portal, ABC):
         super().__init__(on_recieve)
         self.period = period
 
-    def crawl(self):
+    async def crawl(self):
         """Should be implemented by subclasses. Simply starts crawling"""
 
-    def start_loop(self):
+    async def start_loop(self):
         """Starts looping. This will call self.crawl periodically."""
         # TODO
