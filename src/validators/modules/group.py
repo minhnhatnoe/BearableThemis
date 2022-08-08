@@ -10,9 +10,11 @@ class Group(Validator):
     '''Bind multiple validators together'''
     name = "Group"
 
-    def __init__(self, validators: List[Validator]):
+    def __init__(self, validators: List[Validator] | None):
         '''Simply assigns the validators'''
         self.validators = validators
+        if validators is None:
+            self.validators = []
 
     def __call__(self, sub: Submission) -> None:
         for validator in self.validators:
