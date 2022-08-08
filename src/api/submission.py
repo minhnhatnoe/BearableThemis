@@ -10,7 +10,7 @@ class Submission:
     def __init__(self, contestant: str, problem_name: str, # pylint: disable=too-many-arguments
                  lang: str, content: str, source: str,
                  submit_timestamp: datetime.datetime,
-                 recieve_timestamp: datetime.datetime = datetime.datetime.now()) -> None:
+                 recieve_timestamp: datetime.datetime|None = None) -> None:
         '''Creates a new submission.
         Lang: extension of code.
         Source: Information regarding source of submission.
@@ -18,7 +18,10 @@ class Submission:
         self.contestant, self.problem_name, self.lang = contestant, problem_name, lang
         self.content = content
         self.source = source
-        self.submit_timestamp, self.recieve_timestamp = submit_timestamp, recieve_timestamp
+        self.submit_timestamp = submit_timestamp
+        self.recieve_timestamp = recieve_timestamp
+        if recieve_timestamp is None:
+            self.recieve_timestamp = datetime.datetime.now()
         logging.info(
                 "Recieved %s.%s of %s from %s at %s",
                 problem_name, lang, contestant, source, recieve_timestamp)
