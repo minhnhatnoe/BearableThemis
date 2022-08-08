@@ -7,7 +7,7 @@ import hashlib
 class Submission:
     '''Represents a submission'''
 
-    def __init__(self, contestant: str, problem_name: str, # pylint: disable=too-many-arguments
+    def __init__(self, contestant: str, problem_name: str,
                  lang: str, content: str, source: str,
                  submit_timestamp: datetime.datetime,
                  recieve_timestamp: datetime.datetime|None = None) -> None:

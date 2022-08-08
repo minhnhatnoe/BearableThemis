@@ -36,7 +36,7 @@ class EndTime(Validator):
             raise CodeError(type(self), sub, detail)
 
 
-class TimeWindow(Group): # pylint: disable=too-few-public-methods
+class TimeWindow(Group):
     '''Drop submissions with submit_timestamp out of range [start, end)'''
     name = "Time-window"
 
