@@ -1,7 +1,7 @@
 '''Check if a submission is duplicated'''
-from src.api.submission import Submission
-from src.validators.modules.validatorabc import Validator
-from src.validators.error import CodeError
+from api.submission import Submission
+from validators.modules.validatorabc import Validator
+from validators.error import CodeError
 
 __all__ = ['Duplicate']
 

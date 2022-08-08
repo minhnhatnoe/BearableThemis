@@ -1,8 +1,8 @@
 '''Contains class for throwing errors related to submissions'''
 import logging
 from typing import Type
-from src.validators.modules.validatorabc import Validator
-from src.api.submission import Submission
+from validators.modules.validatorabc import Validator
+from api.submission import Submission
 
 __all__ = ['CodeError']
 

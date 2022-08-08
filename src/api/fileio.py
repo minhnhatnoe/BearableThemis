@@ -1,8 +1,8 @@
 '''Functions to interact with Themis'''
 import asyncio
 from os import path
-from src import config
-from src.api.submission import Submission
+import config
+from api.submission import Submission
 
 
 class FileIOException(Exception):

@@ -1,9 +1,9 @@
 '''Modules to control submission time window'''
 import datetime
-from src.api.submission import Submission
-from src.validators.modules.group import Group
-from src.validators.modules.validatorabc import Validator
-from src.validators.error import CodeError
+from api.submission import Submission
+from validators.modules.group import Group
+from validators.modules.validatorabc import Validator
+from validators.error import CodeError
 
 __all__ = ['StartTime', 'EndTime', 'TimeWindow']
 

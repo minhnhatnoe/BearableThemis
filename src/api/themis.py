@@ -2,10 +2,10 @@
 from os import path
 import logging
 from typing import List
-from src import config
-from src.api import fileio
-from src.api.submission import Submission
-from src.validators import Validator
+import config
+from api import fileio
+from api.submission import Submission
+from validators import Validator
 
 class ThemisInteractError(Exception):
     '''Class for throwing Themis errors around'''

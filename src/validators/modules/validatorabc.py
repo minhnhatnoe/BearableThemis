@@ -1,6 +1,6 @@
 '''Contains ABC for validators'''
 from abc import ABC
-from src.api.submission import Submission
+from api.submission import Submission
 __all__ = ['Validator']
 
 class Validator(ABC):

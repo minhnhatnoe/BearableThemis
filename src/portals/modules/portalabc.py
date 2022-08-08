@@ -2,7 +2,7 @@
 from abc import ABC
 import logging
 from typing import Callable, Coroutine
-from src.api.submission import Submission
+from api.submission import Submission
 
 
 class Portal(ABC):

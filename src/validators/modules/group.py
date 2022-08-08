@@ -1,7 +1,7 @@
 '''A validator that is a group of other validators'''
 from typing import List
-from src.validators.modules.validatorabc import Validator
-from src.api.submission import Submission
+from validators.modules.validatorabc import Validator
+from api.submission import Submission
 
 __all__ = ['Group']
 
