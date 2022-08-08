@@ -1,3 +1,4 @@
+'''Functions to interact with Themis'''
 import asyncio
 from os import path
 from src import config
@@ -21,10 +22,12 @@ def submit(osd: str, sub: Submission) -> None:
     write_file(path.join(osd, fname), sub.content)
 
 def read_log(fpath: str) -> str:
+    '''Reads a utf-8 text file'''
     with open(fpath, "r", encoding="utf-8") as file:
         return file.read()
 
 async def read_result(osd: str, sub: Submission) -> str:
+    '''Waits for judge to finish, then reads the resulting log file'''
     fname = sub.get_file_name()
     log_file_path = path.join(osd, "Logs", f"{fname}.log")
     for _ in range(config.RESULT_READ_TIMEOUT):

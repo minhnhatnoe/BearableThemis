@@ -1,3 +1,4 @@
+'''Contains class for throwing errors related to submissions'''
 import logging
 from typing import Type
 from src.validators.modules.validatorabc import Validator
@@ -6,7 +7,7 @@ from src.api.submission import Submission
 __all__ = ['CodeError']
 
 class CodeError(Exception):
-    '''Base class for throwing errors with codes submitted'''
+    '''Class for throwing errors with codes submitted'''
     def __init__(self, validator_cls: Type[Validator], sub: Submission, detail: str) -> None:
         '''Make messages describing the failure in detail'''
         self.console_msg = \

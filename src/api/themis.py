@@ -25,10 +25,10 @@ class ThemisInstance:
             raise FileNotFoundError(
                 f"{osd} cannot be used because it doesn't exists.")
         self.osd = osd
-        self.contestants = {contestant for contestant in contestants}
+        self.contestants = set(contestants)
         self.validator = validator
         self.await_result = await_result
-        logging.info(f"Created Instance writing to {self.osd}")
+        logging.info("Created Instance writing to %s", self.osd)
 
     def is_contestant(self, name: str) -> bool:
         '''Checks whether a name is a contestant of this instance'''
@@ -41,7 +41,7 @@ class ThemisInstance:
     async def submit(self, sub: Submission) -> None | str:
         '''Submits to Themis for judging. Returns the result if await_result is True'''
 
-        assert(self.is_contestant(sub.contestant))
+        assert self.is_contestant(sub.contestant)
         self.validate_submission(sub)
         fileio.submit(self.osd, sub)
         self.validator.add(sub)
