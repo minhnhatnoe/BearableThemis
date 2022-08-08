@@ -9,7 +9,7 @@ class Portal(ABC):
     """Base class for all portals"""
     name = "Base"
 
-    def __init__(self, on_recieve: Callable[[Submission], Coroutine[None]]):
+    def __init__(self, on_recieve: Callable[[Submission], Coroutine[str]]):
         """Function on_recieve will be called whenever a new submission is detected"""
         self.on_recieve = on_recieve
 
@@ -17,7 +17,7 @@ class Portal(ABC):
 class PassivePortal(Portal, ABC):
     """All passive portals should inherit from this class"""
 
-    def __init__(self, on_recieve: Callable[[Submission], Coroutine[None]]):
+    def __init__(self, on_recieve: Callable[[Submission], Coroutine[str]]):
         """Function on_recieve will be called whenever a new submission is detected"""
         logging.info("%s portal has been initialized", type(self).name)
         super().__init__(on_recieve)
@@ -26,7 +26,7 @@ class PassivePortal(Portal, ABC):
 class ActivePortal(Portal, ABC):
     """All active portals should inherit from this class"""
 
-    def __init__(self, on_recieve: Callable[[Submission], Coroutine[None]],
+    def __init__(self, on_recieve: Callable[[Submission], Coroutine[str]],
                  period: float):
         """Period is number of seconds to wait between crawling attempts"""
         logging.info(
