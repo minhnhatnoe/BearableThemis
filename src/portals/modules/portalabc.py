@@ -1,5 +1,6 @@
 """Abstract Base Class for portals"""
 from abc import ABC
+import asyncio
 import logging
 from typing import Callable, Coroutine
 from api.submission import Submission
@@ -39,4 +40,6 @@ class ActivePortal(Portal, ABC):
 
     async def start_loop(self):
         """Starts looping. This will call self.crawl periodically."""
-        # TODO
+        while True:
+            self.crawl()
+            asyncio.sleep(self.period)
