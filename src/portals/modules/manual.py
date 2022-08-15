@@ -3,6 +3,7 @@ from datetime import datetime
 from api import Submission
 from portals.modules.portalabc import PassivePortal
 
+
 class ManualPortal(PassivePortal):
     """Experimental portal, merely a placeholder.
     This should not be used in production."""
@@ -19,4 +20,3 @@ class ManualPortal(PassivePortal):
                 Submission(name, problem, "cpp", code,
                            "manual", datetime.now()))
             print(result)
-            
