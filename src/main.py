@@ -1,3 +1,4 @@
+"""A code just to show that it works"""
 import asyncio
 from api import ThemisInstance
 from portals.modules.manual import ManualPortal
@@ -5,11 +6,11 @@ from validators import Group
 
 osd = input("OSD: ")
 validator = Group([])
-await_result = True
+AWTRES = True
 
-tinst = ThemisInstance(osd, ["B05"], validator, await_result)
+tinst = ThemisInstance(osd, ["B05"], validator, AWTRES)
 portal = ManualPortal(tinst.submit)
 
-funct = portal.start()
+FUNCT = portal.start()
 
-asyncio.run(funct)
+asyncio.run(FUNCT)

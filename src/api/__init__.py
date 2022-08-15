@@ -1,3 +1,4 @@
+"""Objects that should be exposed for api"""
 from api.fileio import FileIOException
 from api.submission import Submission
 from api.themis import ThemisInstance, ThemisInteractError
