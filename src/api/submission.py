@@ -3,6 +3,7 @@ import logging
 import datetime
 import hashlib
 
+__all__ = ['Submission']
 
 class Submission:
     '''Represents a submission'''

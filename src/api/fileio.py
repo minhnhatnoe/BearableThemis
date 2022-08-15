@@ -4,7 +4,6 @@ from os import path
 import config
 from api.submission import Submission
 
-
 class FileIOException(Exception):
     '''Class for throwing exceptions around'''
 

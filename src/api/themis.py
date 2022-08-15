@@ -7,6 +7,8 @@ from api import fileio
 from api.submission import Submission
 from validators import Validator
 
+__all__ = ['ThemisInteractError', 'ThemisInstance']
+
 class ThemisInteractError(Exception):
     '''Class for throwing Themis errors around'''
 
