@@ -7,5 +7,5 @@ from validators.modules.lastsub import LastSubmit
 from validators.error import CodeError
 
 
-__all__ = ['Validator', 'Group', 'Duplicate', 'LastSubmit'
+__all__ = ['Validator', 'Group', 'Duplicate', 'LastSubmit',
            'StartTime', 'EndTime', 'TimeWindow', 'CodeError']
