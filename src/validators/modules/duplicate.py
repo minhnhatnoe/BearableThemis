@@ -1,7 +1,7 @@
 '''Check if a submission is duplicated'''
 from api.submission import Submission
-from validators.modules.validatorabc import Validator
 from validators.error import CodeError
+from validators.modules.validatorabc import Validator
 
 __all__ = ['Duplicate']
 
@@ -20,7 +20,7 @@ class Duplicate(Validator):
 
         hash_val = hash(sub.content)
         if hash_val in self.code_hashes[sub.contestant]:
-            detail = f"Same code submitted at {self.code_hashes[sub.contestant][hash_val]}"
+            detail = f"Similar code submitted at {self.code_hashes[sub.contestant][hash_val]}"
             raise CodeError(type(self), sub, detail)
 
     def add(self, sub: Submission) -> None:
