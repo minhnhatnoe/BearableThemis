@@ -5,10 +5,11 @@ import datetime
 
 __all__ = ['Submission']
 
+
 @dataclass(frozen=True, slots=True, )
 class Submission:
     """Represents a submission.
-    
+
     Args:
         contestant (str): ID of contestant.
         problem_name (str): ID of problem.
@@ -24,7 +25,8 @@ class Submission:
     content: str
     source: str
     submit_timestamp: datetime.datetime
-    receive_timestamp: datetime.datetime = field(default_factory=datetime.datetime.now, compare=False)
+    receive_timestamp: datetime.datetime = field(
+        default_factory=datetime.datetime.now, compare=False)
 
     def __post_init__(self) -> None:
         '''Creates a new submission.
@@ -32,8 +34,8 @@ class Submission:
         Source: Information regarding source of submission.
         Submit_timestamp: Timestamp retrieved from the respective service'''
         logging.info(
-                "Recieved %s.%s of %s from %s at %s",
-                self.problem_name, self.lang, self.contestant, self.source, self.receive_timestamp)
+            "Recieved %s.%s of %s from %s at %s",
+            self.problem_name, self.lang, self.contestant, self.source, self.receive_timestamp)
 
     def get_file_name(self) -> str:
         '''Generate file name when interacting with themis'''

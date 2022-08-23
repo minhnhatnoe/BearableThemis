@@ -12,6 +12,7 @@ tinst = ThemisInstance(osd, ["B05"], validator, AWTRES)
 portal = ManualPortal().listen()
 
 async def run():
+    """Run the routine"""
     async for sub in portal:
         result = await tinst.submit(sub)
         await portal.asend(result)

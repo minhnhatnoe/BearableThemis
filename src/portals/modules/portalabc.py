@@ -4,6 +4,7 @@ from typing import AsyncGenerator
 from api.submission import Submission
 
 class Portal(ABC):
+    """Base class for all portals. All portals should inherit this."""
     def __init__(self) -> None:
         """Initializes the Portal with respective arguments"""
 
