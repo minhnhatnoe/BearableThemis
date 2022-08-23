@@ -8,7 +8,7 @@ osd = input("OSD: ")
 validator = Group([])
 AWTRES = True
 
-tinst = ThemisInstance(osd, ["B05"], validator, AWTRES)
+tinst = ThemisInstance(osd, validator, AWTRES)
 portal = ManualPortal().listen()
 
 async def run():

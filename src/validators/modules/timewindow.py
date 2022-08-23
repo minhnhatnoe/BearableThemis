@@ -10,7 +10,7 @@ __all__ = ['StartTime', 'EndTime', 'TimeWindow']
 
 class StartTime(Validator):
     '''Drop submissions with submit_timestamp out of range [start, +inf)'''
-    name = "Start-time"
+    name = "StartTime"
 
     def __init__(self, start: datetime.datetime):
         '''Start is the starting moment'''
@@ -24,7 +24,7 @@ class StartTime(Validator):
 
 class EndTime(Validator):
     '''Drop submissions with submit_timestamp out of range (-inf, end)'''
-    name = "End-time"
+    name = "EndTime"
 
     def __init__(self, end: datetime.datetime):
         '''End is the ending moment'''
@@ -38,7 +38,7 @@ class EndTime(Validator):
 
 class TimeWindow(Group):
     '''Drop submissions with submit_timestamp out of range [start, end)'''
-    name = "Time-window"
+    name = "TimeWindow"
 
     def __init__(self, start: datetime.datetime, end: datetime.datetime):
         super().__init__([StartTime(start), EndTime(end)])
