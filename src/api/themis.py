@@ -6,6 +6,7 @@ import config
 from api import fileio
 from api.submission import Submission
 from validators import Validator
+from validators.error import CodeError
 
 __all__ = ['ThemisInteractError', 'ThemisInstance']
 
@@ -15,26 +16,20 @@ class ThemisInteractError(Exception):
 class ThemisInstance:
     '''The one and only object needed to interact with Themis.'''
 
-    def __init__(self, osd: str, contestants: List[str],
-                 validator: Validator,
+    def __init__(self, work_path: str, validator: Validator,
                  await_result: bool = config.ONLINE_MODE) -> None:
         '''Initializes the instance with options.
-        OSD: path set in Themis.
-        Contestants: list of contestant.
-        Validators: list of validators that will throw subclasses of CodeError'''
+        work_path: parent path of path set in Themis.
+        validator: a validator that will throw subclasses of CodeError'''
 
-        if not path.exists(osd):
+        self.osd = str(path.join(work_path, "osd"))
+        self.rejected = str(path.join(work_path, "rejected"))
+        if not path.exists(self.osd):
             raise FileNotFoundError(
-                f"{osd} cannot be used because it doesn't exists.")
-        self.osd = osd
-        self.contestants = set(contestants)
+                f"{self.osd} cannot be used because it doesn't exists.")
         self.validator = validator
         self.await_result = await_result
         logging.info("Created Instance writing to %s", self.osd)
-
-    def is_contestant(self, name: str) -> bool:
-        '''Checks whether a name is a contestant of this instance'''
-        return name in self.contestants
 
     def validate_submission(self, sub: Submission) -> None:
         '''Checks if a submission is legitimate'''
@@ -44,7 +39,10 @@ class ThemisInstance:
         '''Submits to Themis for judging. Returns the result if await_result is True'''
 
         assert self.is_contestant(sub.contestant)
-        self.validate_submission(sub)
+        try:
+            self.validate_submission(sub)
+        except CodeError:
+            fileio.submit(self.rejected, sub)
         fileio.submit(self.osd, sub)
         self.validator.add(sub)
         if not self.await_result:

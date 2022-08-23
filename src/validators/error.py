@@ -8,10 +8,12 @@ __all__ = ['CodeError']
 
 class CodeError(Exception):
     '''Class for throwing errors with codes submitted'''
-    def __init__(self, validator_cls: Type[Validator], sub: Submission, detail: str) -> None:
+    def __init__(self, validator_cls: Type[Validator], sub: Submission, detail: str, continue_try: bool = False) -> None:
         '''Make messages describing the failure in detail'''
         self.console_msg = \
             f"{validator_cls.name}: {sub.contestant}'s code of {sub.problem_name} - {detail}"
         logging.warning(self.console_msg)
         super().__init__(self.console_msg)
+        
         self.contestant_msg = f"{validator_cls.name}: {detail}"
+        self.continue_try = continue_try # True if this error is something like wrong metadata
