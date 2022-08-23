@@ -1,44 +1,42 @@
 '''Contains the Submission class'''
+from dataclasses import dataclass, field
 import logging
 import datetime
-import hashlib
 
 __all__ = ['Submission']
 
+@dataclass(frozen=True, slots=True, )
 class Submission:
-    '''Represents a submission'''
+    """Represents a submission.
+    
+    Args:
+        contestant (str): ID of contestant.
+        problem_name (str): ID of problem.
+        lang (str): Extension of the code (without the ".").
+        content (str): Content of the code.
+        source (str): Information regarding where the code was gotten from.
+        submit_timestamp (datetime.datetime): Timestamp from the source.
+        receive_timestamp (datetime.datetime): Timestamp of received moment.
+    """
+    contestant: str
+    problem_name: str
+    lang: str
+    content: str
+    source: str
+    submit_timestamp: datetime.datetime
+    receive_timestamp: datetime.datetime = field(default_factory=datetime.datetime.now, compare=False)
 
-    def __init__(self, contestant: str, problem_name: str,
-                 lang: str, content: str, source: str,
-                 submit_timestamp: datetime.datetime,
-                 recieve_timestamp: datetime.datetime|None = None) -> None:
+    def __post_init__(self) -> None:
         '''Creates a new submission.
         Lang: extension of code.
         Source: Information regarding source of submission.
         Submit_timestamp: Timestamp retrieved from the respective service'''
-        self.contestant, self.problem_name, self.lang = contestant, problem_name, lang
-        self.content = content
-        self.source = source
-        self.submit_timestamp = submit_timestamp
-        self.recieve_timestamp = recieve_timestamp
-        if recieve_timestamp is None:
-            self.recieve_timestamp = datetime.datetime.now()
         logging.info(
                 "Recieved %s.%s of %s from %s at %s",
-                problem_name, lang, contestant, source, recieve_timestamp)
-
-    def hash(self) -> str:
-        '''Hashes a submission.
-        The same submission from a platform (ie. Same cell in Sheets)
-        is guaranteed to have the same hash value across all runs.
-        Internally, this uses sha256, and returns the first 8 characters'''
-        box = hashlib.new("sha256")
-        for data in [self.contestant, self.problem_name, self.lang,
-                     self.content, self.source,
-                     self.submit_timestamp]:
-            box.update(bytes(f"{data}", 'utf-8'))
-        return box.hexdigest()[:8]
+                self.problem_name, self.lang, self.contestant, self.source, self.receive_timestamp)
 
     def get_file_name(self) -> str:
         '''Generate file name when interacting with themis'''
-        return f"{self.hash()}[{self.contestant}][{self.problem_name}].{self.lang}"
+        hash_val = f"{hash(self):X}"
+        hash_val = hash_val[-8:]
+        return f"{hash_val}[{self.contestant}][{self.problem_name}].{self.lang}"
