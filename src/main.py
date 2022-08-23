@@ -9,8 +9,11 @@ validator = Group([])
 AWTRES = True
 
 tinst = ThemisInstance(osd, ["B05"], validator, AWTRES)
-portal = ManualPortal(tinst.submit)
+portal = ManualPortal().listen()
 
-FUNCT = portal.start()
+async def run():
+    async for sub in portal:
+        result = await tinst.submit(sub)
+        await portal.asend(result)
 
-asyncio.run(FUNCT)
+asyncio.run(run())

@@ -1,6 +1,5 @@
 """Abstract Base Class for portals"""
 from abc import ABC
-import asyncio
 from typing import AsyncGenerator
 from api.submission import Submission
 
