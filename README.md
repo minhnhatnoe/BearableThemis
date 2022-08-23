@@ -5,6 +5,4 @@ Some scripts to make online mode of Themis (essentially the Vietnamese version o
 ## TODOs:
 
 1. Self type annotation (when Python 3.11 is released)
-2. Use the @dataclass decorator for Submission class to make code more readable
-3. Implement portals as async generators
-4. Use ```__slots__``` to optimize memory usage
+2. Implement portals as async generators
