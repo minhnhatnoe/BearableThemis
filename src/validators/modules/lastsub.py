@@ -1,9 +1,9 @@
 '''A validator that ensures current '''
-from validators.modules.validatorabc import Validator
 from api.submission import Submission
 from validators.error import CodeError
+from validators.modules.validatorabc import Validator
 
-__all__ = ['Group']
+__all__ = ['LastSubmit']
 
 
 class LastSubmit(Validator):
