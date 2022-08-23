@@ -13,7 +13,7 @@ class Contestant(Validator):
 
     def __call__(self, sub: Submission) -> None:
         if sub.contestant not in self.contestants:
-            detail = f"User not in list of contestants"
+            detail = f"User {sub.contestant} not in list of contestants"
             raise CodeError(type(self), sub, detail)
 
 class Problems(Validator):
@@ -24,5 +24,5 @@ class Problems(Validator):
 
     def __call__(self, sub: Submission) -> None:
         if sub.problem_name not in self.ids:
-            detail = f"Problem not in this contest"
+            detail = f"Problem {sub.problem_name} not in this contest"
             raise CodeError(type(self), sub, detail)
