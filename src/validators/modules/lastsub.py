@@ -1,9 +1,9 @@
-'''A validator that ensures current '''
+"""A validator that ensures current """
 from api.submission import Submission
 from validators.error import CodeError
 from validators.modules.validatorabc import Validator
 
-__all__ = ['LastSubmit']
+__all__ = ["LastSubmit"]
 
 
 class LastSubmit(Validator):
@@ -24,7 +24,7 @@ class LastSubmit(Validator):
             return
 
     def add(self, sub: Submission) -> None:
-        """Add the submission's timestamp"""
+        """Add the submission"s timestamp"""
         if sub.contestant not in self.subs_time:
             self.subs_time[sub.contestant] = {}
         self.subs_time[sub.contestant][sub.problem_name] = sub.submit_timestamp

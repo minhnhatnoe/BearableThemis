@@ -1,19 +1,19 @@
-'''Modules to control submission time window'''
+"""Modules to control submission time window"""
 import datetime
 from api.submission import Submission
 from validators.modules.group import Group
 from validators.modules.validatorabc import Validator
 from validators.error import CodeError
 
-__all__ = ['StartTime', 'EndTime', 'TimeWindow']
+__all__ = ["StartTime", "EndTime", "TimeWindow"]
 
 
 class StartTime(Validator):
-    '''Drop submissions with submit_timestamp out of range [start, +inf)'''
+    """Drop submissions with submit_timestamp out of range [start, +inf)"""
     name = "StartTime"
 
     def __init__(self, start: datetime.datetime):
-        '''Start is the starting moment'''
+        """Start is the starting moment"""
         self.start = start
 
     def __call__(self, sub: Submission) -> None:
@@ -23,11 +23,11 @@ class StartTime(Validator):
 
 
 class EndTime(Validator):
-    '''Drop submissions with submit_timestamp out of range (-inf, end)'''
+    """Drop submissions with submit_timestamp out of range (-inf, end)"""
     name = "EndTime"
 
     def __init__(self, end: datetime.datetime):
-        '''End is the ending moment'''
+        """End is the ending moment"""
         self.end = end
 
     def __call__(self, sub: Submission) -> None:
@@ -37,7 +37,7 @@ class EndTime(Validator):
 
 
 class TimeWindow(Group):
-    '''Drop submissions with submit_timestamp out of range [start, end)'''
+    """Drop submissions with submit_timestamp out of range [start, end)"""
     name = "TimeWindow"
 
     def __init__(self, start: datetime.datetime, end: datetime.datetime):

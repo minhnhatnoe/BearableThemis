@@ -1,17 +1,17 @@
-'''A validator that is a group of other validators'''
+"""A validator that is a group of other validators"""
 from typing import List
 from validators.modules.validatorabc import Validator
 from api.submission import Submission
 
-__all__ = ['Group']
+__all__ = ["Group"]
 
 
 class Group(Validator):
-    '''Bind multiple validators together'''
+    """Bind multiple validators together"""
     name = "Group"
 
     def __init__(self, validators: List[Validator] | None):
-        '''Simply assigns the validators'''
+        """Simply assigns the validators"""
         self.validators = validators
         if validators is None:
             self.validators = []

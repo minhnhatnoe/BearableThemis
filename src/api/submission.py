@@ -1,9 +1,9 @@
-'''Contains the Submission class'''
+"""Contains the Submission class"""
 from dataclasses import dataclass, field
 import logging
 import datetime
 
-__all__ = ['Submission']
+__all__ = ["Submission"]
 
 
 @dataclass(frozen=True, slots=True, )
@@ -29,16 +29,16 @@ class Submission:
         default_factory=datetime.datetime.now, compare=False)
 
     def __post_init__(self) -> None:
-        '''Creates a new submission.
+        """Creates a new submission.
         Lang: extension of code.
         Source: Information regarding source of submission.
-        Submit_timestamp: Timestamp retrieved from the respective service'''
+        Submit_timestamp: Timestamp retrieved from the respective service"""
         logging.info(
             "Recieved %s.%s of %s from %s at %s",
             self.problem_name, self.lang, self.contestant, self.source, self.receive_timestamp)
 
     def get_file_name(self) -> str:
-        '''Generate file name when interacting with themis'''
+        """Generate file name when interacting with themis"""
         hash_val = f"{hash(self):X}"
         hash_val = hash_val[-8:]
         return f"{hash_val}[{self.contestant}][{self.problem_name}].{self.lang}"

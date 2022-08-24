@@ -1,20 +1,20 @@
-'''Check if a submission is duplicated'''
+"""Check if a submission is duplicated"""
 from api.submission import Submission
 from validators.error import CodeError
 from validators.modules.validatorabc import Validator
 
-__all__ = ['Duplicate']
+__all__ = ["Duplicate"]
 
 class Duplicate(Validator):
-    '''Check if code is duplicated'''
+    """Check if code is duplicated"""
     name = "Duplicate"
 
     def __init__(self) -> None:
-        '''Initializes the code hash dict'''
+        """Initializes the code hash dict"""
         self.code_hashes = {}
 
     def __call__(self, sub: Submission) -> None:
-        '''Check if submission already exists'''
+        """Check if submission already exists"""
         if sub.contestant not in self.code_hashes:
             return
 
@@ -24,7 +24,7 @@ class Duplicate(Validator):
             raise CodeError(type(self), sub, detail)
 
     def add(self, sub: Submission) -> None:
-        '''Hashes and add the submission'''
+        """Hashes and add the submission"""
 
         if sub.contestant not in self.code_hashes:
             self.code_hashes[sub.contestant] = {}

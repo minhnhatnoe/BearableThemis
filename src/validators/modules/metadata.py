@@ -1,14 +1,14 @@
-'''Validator to check if metadata fits a contest'''
+"""Validator to check if metadata fits a contest"""
 from api.submission import Submission
 from validators.modules.validatorabc import Validator
 from validators.error import CodeError
 
 class Contestant(Validator):
-    '''Checks if contestant is of contest'''
+    """Checks if contestant is of contest"""
     name = "Contestant"
 
     def __init__(self, contestants: list[str]):
-        '''Start is the starting moment'''
+        """Start is the starting moment"""
         self.contestants = set(contestants)
 
     def __call__(self, sub: Submission) -> None:
@@ -17,9 +17,9 @@ class Contestant(Validator):
             raise CodeError(type(self), sub, detail)
 
 class Problems(Validator):
-    '''Drop submissions with wrong problem id'''
+    """Drop submissions with wrong problem id"""
     def __init__(self, problem_ids: list[str]):
-        '''Start is the starting moment'''
+        """Start is the starting moment"""
         self.ids = set(problem_ids)
 
     def __call__(self, sub: Submission) -> None:
