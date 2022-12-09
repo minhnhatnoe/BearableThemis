@@ -1,12 +1,15 @@
 """Abstract Base Class for portals"""
 from abc import ABC
-from typing import AsyncGenerator
 from api.submission import Submission
+
 
 class Portal(ABC):
     """Base class for all portals. All portals should inherit this."""
-    def __init__(self) -> None:
-        """Initializes the Portal with respective arguments"""
+    name = ""
 
-    async def listen(self) -> AsyncGenerator[Submission, str]:
-        """Starts listening to codes."""
+    def __init__(self, jury: callable[Submission]) -> None:
+        """Initializes the Portal with respective arguments"""
+        self.jury = jury
+
+    async def listen(self) -> None:
+        """Listen for codes"""

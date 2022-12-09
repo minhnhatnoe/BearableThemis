@@ -10,7 +10,7 @@ class ManualPortal(Portal):
     This should not be used in production."""
     name = "Manual"
 
-    async def listen(self) -> AsyncGenerator[Submission, str]:
+    async def listen(self) -> None:
         """Waits for codes"""
         while True:
             name = input("Name: ")
@@ -18,6 +18,6 @@ class ManualPortal(Portal):
             code_path = input("Code_path: ")
             with open(code_path, "r", encoding="utf-8") as file:
                 code = file.read()
-            result = yield Submission(
-                name, problem, "cpp", code, "manual", datetime.now())
+            result = self.jury(Submission(
+                name, problem, "cpp", code, "manual", datetime.now()))
             print(result)
