@@ -14,3 +14,5 @@ class SubmitCommand(commands.Cog):
     async def file(self, code_file: disnake.Attachment):
         """/submit file <contestant> <problem_name> <lang> <code_file>: Submit a solution"""
         
+def setup(bot: commands.Bot):
+    bot.add_cog(SubmitCommand())
