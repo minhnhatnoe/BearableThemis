@@ -1,6 +1,5 @@
 """Manual submission portal"""
 from datetime import datetime
-from typing import AsyncGenerator
 from api import Submission
 from portals.modules.portalabc import Portal
 
@@ -18,6 +17,6 @@ class ManualPortal(Portal):
             code_path = input("Code_path: ")
             with open(code_path, "r", encoding="utf-8") as file:
                 code = file.read()
-            result = self.jury(Submission(
+            result = await self.judge(Submission(
                 name, problem, "cpp", code, "manual", datetime.now()))
             print(result)

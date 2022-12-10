@@ -1,20 +1,18 @@
-# """A code just to show that it works"""
-# import asyncio
-# from api import ThemisInstance
-# from portals.modules.manual import ManualPortal
-# from validators import Group
+"""A code just to show that it works"""
+import asyncio
+from api import ThemisInstance
+from portals.modules.gitcord import Gitcord
+from validators import Group
 
-# osd = input("OSD: ")
-# validator = Group([])
-# AWTRES = True
+osd = input("OSD: ")
+validator = Group([])
+AWTRES = True
 
-# tinst = ThemisInstance(osd, validator, AWTRES)
-# portal = ManualPortal().listen()
+tinst = ThemisInstance(osd, validator, AWTRES)
+portal = Gitcord(None, judge=tinst.submit)
 
-# async def run():
-#     """Run the routine"""
-#     async for sub in portal:
-#         result = await tinst.submit(sub)
-#         await portal.asend(result)
+async def run():
+    """Run the routine"""
+    await portal.listen()
 
-# asyncio.run(run())
+asyncio.run(run())
