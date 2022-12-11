@@ -3,10 +3,10 @@ from dataclasses import dataclass, field
 import logging
 import datetime
 
-__all__ = ["Submission"]
+__all__ = ["Submission", "available_langs"]
+available_langs = ["cpp", "py"]
 
-
-@dataclass(frozen=True, slots=True, )
+@dataclass(frozen=True, slots=True)
 class Submission:
     """Represents a submission.
 
@@ -36,6 +36,7 @@ class Submission:
         logging.info(
             "Recieved %s.%s of %s from %s at %s",
             self.problem_name, self.lang, self.contestant, self.source, self.receive_timestamp)
+        assert self.lang in available_langs
 
     def get_file_name(self) -> str:
         """Generate file name when interacting with themis"""
