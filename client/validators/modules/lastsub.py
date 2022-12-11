@@ -1,7 +1,7 @@
 """A validator that ensures current """
-from api.submission import Submission
-from validators.error import CodeError
-from validators.modules.validatorabc import Validator
+from ..error import CodeError
+from ..modules.validatorabc import Validator
+from ...themis.submission import Submission
 
 __all__ = ["LastSubmit"]
 

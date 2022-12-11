@@ -1,9 +1,8 @@
 """Modules to control submission time window"""
 import datetime
-from api.submission import Submission
-from validators.modules.group import Group
-from validators.modules.validatorabc import Validator
-from validators.error import CodeError
+from ...themis.submission import Submission
+from ..error import CodeError
+from ..modules.validatorabc import Validator
 
 __all__ = ["StartTime", "EndTime", "TimeWindow"]
 
@@ -34,11 +33,3 @@ class EndTime(Validator):
         if sub.submit_timestamp >= self.end:
             detail = f"Submission made at {sub.submit_timestamp}, which is after {self.end}"
             raise CodeError(type(self), sub, detail)
-
-
-class TimeWindow(Group):
-    """Drop submissions with submit_timestamp out of range [start, end)"""
-    name = "TimeWindow"
-
-    def __init__(self, start: datetime.datetime, end: datetime.datetime):
-        super().__init__([StartTime(start), EndTime(end)])

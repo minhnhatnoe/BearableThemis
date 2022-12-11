@@ -1,7 +1,7 @@
 """Abstract Base Class for portals"""
 from abc import ABC
 from typing import Awaitable
-from api.submission import Submission
+from ..themis import Submission
 
 
 class Portal(ABC):
@@ -12,5 +12,5 @@ class Portal(ABC):
         """Initializes the Portal with respective arguments"""
         self.judge = judge
 
-    async def listen(self) -> None:
+    def listen(self) -> None:
         """Listen for codes"""

@@ -1,7 +1,7 @@
 """Validator to check if metadata fits a contest"""
-from api.submission import Submission
-from validators.modules.validatorabc import Validator
-from validators.error import CodeError
+from ..error import CodeError
+from ..modules.validatorabc import Validator
+from ...themis.submission import Submission
 
 class Contestant(Validator):
     """Checks if contestant is of contest"""

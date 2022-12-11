@@ -1,7 +1,7 @@
 """Manual submission portal"""
 from datetime import datetime
-from api import Submission
-from portals.modules.portalabc import Portal
+from ..themis import Submission
+from .portalabc import Portal
 
 
 class ManualPortal(Portal):

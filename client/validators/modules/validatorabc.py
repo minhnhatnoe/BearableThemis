@@ -1,6 +1,6 @@
 """Contains ABC for validators"""
 from abc import ABC
-from api.submission import Submission
+from ...themis.submission import Submission
 __all__ = ["Validator"]
 
 class Validator(ABC):
